@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
@@ -41,7 +40,7 @@ public class SplashScreen2startGame extends Activity {
                         public void run() {
                             pg.setProgress(progress);
                             if (progress == pg.getMax()) {
-                                pg.setVisibility(View.INVISIBLE);
+                                pg.setVisibility(0);
                                 Intent i = new Intent(getApplicationContext(), startGame.class);
                                 startActivity(i);
 

@@ -25,15 +25,12 @@ public class GameScene extends AbstractScene {
     public void populate() {
         createBackground();
         createPlayer();
-        createHUD();
+
         setChaseCamera();
         update();
 
     }
 
-    private void createHUD() {
-
-    }
 
     private void update() {
     }
@@ -46,7 +43,7 @@ public class GameScene extends AbstractScene {
     }
 
     private void setChaseCamera() {
-
+        //camera.setChaseEntity(this.player);
     }
 
     @Override

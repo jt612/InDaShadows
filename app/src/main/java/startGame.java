@@ -1,13 +1,13 @@
+import com.jobprogrammers.indashadows.AbstractScene;
 import com.jobprogrammers.indashadows.GameScene;
+import com.jobprogrammers.indashadows.ResourceManager;
 
-import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
 import org.andengine.engine.options.WakeLockOptions;
 import org.andengine.engine.options.resolutionpolicy.FillResolutionPolicy;
 import org.andengine.entity.scene.Scene;
-import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.ui.activity.BaseGameActivity;
 import org.andengine.util.debug.Debug;
 
@@ -24,8 +24,7 @@ public class startGame extends BaseGameActivity {
     //final DisplayMetrics dm = new DisplayMetrics();
     //this.dm.
     Camera camera;
-    Engine engine;
-    VertexBufferObjectManager vbom;
+
 
     @Override
     public EngineOptions onCreateEngineOptions() {
@@ -40,16 +39,14 @@ public class startGame extends BaseGameActivity {
 
     @Override
     public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws IOException {
-        // ResourceManager.getInstance().create(this, engine, camera, vbom);
-        //gives an error now because of the file structure change
-        //going to see if I can get it to push and keep the original file structure
+        ResourceManager.getInstance().create(this, this.mEngine, this.camera, this.getVertexBufferObjectManager());
         ResourceManager.getInstance().loadFont();
         ResourceManager.getInstance().loadGameGraphics();
 
         ResourceManager.getInstance().loadGameAudio();
         ResourceManager.getInstance().createHUD();
         ResourceManager.getInstance().createController();
-
+        ResourceManager.getInstance().mControl.refreshControlKnobPosition();
 
         pOnCreateResourcesCallback.onCreateResourcesFinished();
     }
@@ -64,7 +61,7 @@ public class startGame extends BaseGameActivity {
 
 
         ResourceManager.getInstance().mControl.refreshControlKnobPosition();
-        //scene.setChildScene(ResourceManager.getInstance().mControl);
+        scene.setChildScene(ResourceManager.getInstance().mControl);
 
         pOnCreateSceneCallback.onCreateSceneFinished(scene);
     }

@@ -14,9 +14,13 @@ public abstract class AbstractScene extends Scene {
     protected ResourceManager res = ResourceManager.getInstance();
 
     protected Engine engine = res.engine;
-    protected startGame activity = res.activity;
+    protected startGame activity;
     protected VertexBufferObjectManager vbom = res.vbom;
     protected Camera camera = res.camera;
+
+    protected AbstractScene() {
+        activity = res.activity;
+    }
 
     public abstract void populate();
 

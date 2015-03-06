@@ -136,8 +136,8 @@ public class ResourceManager {
     public void createController() {
 
         //values for size of the images
-        final float controllerX = controlBaseTextureRegion.getWidth() / 2;
-        final float controllerY = controlBaseTextureRegion.getHeight() / 2;
+        final float controllerX = controlBaseTextureRegion.getWidth();
+        final float controllerY = controlBaseTextureRegion.getHeight();
 
         mControl = new AnalogOnScreenControl(controllerX, controllerY, camera, controlBaseTextureRegion, controlKnobTextureRegion, 0.1f, this.engine.getVertexBufferObjectManager(), new AnalogOnScreenControl.IAnalogOnScreenControlListener() {
             @Override
@@ -161,7 +161,7 @@ public class ResourceManager {
         score = new Text(16, 20, font, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
         score.setAnchorCenter(0, -4);
         mHUD.attachChild(score);
-        mHUD.attachChild(mControl);
+        //mHUD.attachChild(mControl);
         camera.setHUD(mHUD);
     }
 
