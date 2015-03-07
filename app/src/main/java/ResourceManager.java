@@ -7,11 +7,7 @@ import org.andengine.audio.music.MusicFactory;
 import org.andengine.audio.sound.Sound;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
-import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
-import org.andengine.engine.camera.hud.controls.BaseOnScreenControl;
-import org.andengine.entity.text.Text;
-import org.andengine.entity.text.TextOptions;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
 import org.andengine.opengl.texture.ITexture;
@@ -27,7 +23,6 @@ import org.andengine.opengl.texture.bitmap.BitmapTextureFormat;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.ITiledTextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
-import org.andengine.util.adt.align.HorizontalAlign;
 import org.andengine.util.adt.color.Color;
 import org.andengine.util.debug.Debug;
 
@@ -58,12 +53,12 @@ public class ResourceManager {
     public Music music;
     //font related
     public Font font;
-    HUD mHUD;
     String TAG = "startGame/resourceManager";
     AnalogOnScreenControl mControl;
     private BuildableBitmapTextureAtlas gameTextureAtlas;
+
+    ;
     private BuildableBitmapTextureAtlas otherTextureAtlas;
-    private Text score;
 
 
     private ResourceManager() {
@@ -100,7 +95,6 @@ public class ResourceManager {
         //joystick image for controller
         controlKnobTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity.getAssets(), "knob.png");
 
-        this.createController();
 
         try {
             gameTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(4, 0, 4));
@@ -127,44 +121,12 @@ public class ResourceManager {
 
     public void loadFont() {
         font = FontFactory.createStroke(activity.getFontManager(), activity.getTextureManager(), 256, 256,
-                Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD), 50, true, Color.WHITE_ABGR_PACKED_INT, 2,
+                Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD), 36, true, Color.WHITE_ABGR_PACKED_INT, 2,
                 Color.BLACK_ABGR_PACKED_INT);
         font.load();
     }
 
 
-    public void createController() {
-
-        //values for size of the images
-        final float controllerX = controlBaseTextureRegion.getWidth();
-        final float controllerY = controlBaseTextureRegion.getHeight();
-
-        mControl = new AnalogOnScreenControl(controllerX, controllerY, camera, controlBaseTextureRegion, controlKnobTextureRegion, 0.1f, this.engine.getVertexBufferObjectManager(), new AnalogOnScreenControl.IAnalogOnScreenControlListener() {
-            @Override
-            public void onControlClick(AnalogOnScreenControl pAnalogOnScreenControl) {
-                //for now do nothing
-                //this is when they click on the control
-            }
-
-            @Override
-            public void onControlChange(BaseOnScreenControl pBaseOnScreenControl, float pValueX, float pValueY) {
-                camera.setCenter(camera.getCenterX() + (pValueX * 10), camera.getCenterY() + (pValueY * 10));
-
-            }
-        });
-
-    } // End of create controller function
-
-    public void createHUD() {
-        mHUD = new HUD();
-        ResourceManager.getInstance().camera.setHUD(mHUD);
-        score = new Text(16, 20, font, "0123456789", new TextOptions(HorizontalAlign.LEFT), vbom);
-        score.setAnchorCenter(0, -4);
-        mHUD.attachChild(score);
-        //mHUD.attachChild(mControl);
-        camera.setHUD(mHUD);
-    }
-
-
-//End of Resource Manager class
 }
+//End of Resource Manager class
+

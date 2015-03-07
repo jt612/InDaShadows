@@ -1,7 +1,5 @@
-import com.jobprogrammers.indashadows.AbstractScene;
 import com.jobprogrammers.indashadows.PlayerFactory;
 import com.jobprogrammers.indashadows.hero;
-import com.jobprogrammers.indashadows.startGame;
 
 import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.sprite.Sprite;
@@ -13,9 +11,9 @@ import org.andengine.entity.text.Text;
 public class GameScene extends AbstractScene {
 
 
-    private hero player;
+    public hero player;
     private Text score;
-
+    private Text timer;
 
     public GameScene() {
         PlayerFactory.getINSTANCE().Create(vbom);
@@ -25,14 +23,14 @@ public class GameScene extends AbstractScene {
     public void populate() {
         createBackground();
         createPlayer();
+        //setChaseCamera();
 
-        setChaseCamera();
-        update();
 
     }
 
 
-    private void update() {
+    public hero getPlayer() {
+        return this.player;
     }
 
 
@@ -42,10 +40,9 @@ public class GameScene extends AbstractScene {
         this.attachChild(player);
     }
 
-    private void setChaseCamera() {
-        //camera.setChaseEntity(this.player);
-    }
-
+    //private void setChaseCamera(){
+    //  ResourceManager.getInstance().camera.setChaseEntity(this.player);
+    //}
     @Override
     public void onPause() {
 

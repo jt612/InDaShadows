@@ -1,5 +1,4 @@
 import com.jobprogrammers.indashadows.ResourceManager;
-import com.jobprogrammers.indashadows.startGame;
 
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;

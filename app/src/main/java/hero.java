@@ -6,6 +6,7 @@ import org.andengine.opengl.vbo.VertexBufferObjectManager;
  * Created by jt612 on 10/20/14.
  */
 public class hero extends TiledSprite {
+    protected int xPos, yPos;
     boolean dead = false;
 
     public hero(float pX, float pY, ITiledTextureRegion pTiledTextureRegion, VertexBufferObjectManager pVbom) {
@@ -40,5 +41,12 @@ public class hero extends TiledSprite {
         setCurrentTileIndex(2);
     }
 
+    public int getXPosition() {
+        return xPos;
+    }
+
+    public int getYPosition() {
+        return yPos;
+    }
 
 }

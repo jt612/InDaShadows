@@ -1,3 +1,6 @@
+import org.andengine.engine.camera.hud.HUD;
+import org.andengine.entity.text.Text;
+
 /**
  * Created by jt612 on 1/30/15.
  */
@@ -5,7 +8,9 @@ public class GameManager {
 
 
     private static GameManager INSTANCE;
-    private int mCurrentScore;
+    public int mCurrentScore;
+    Text score;
+    HUD mHUD;
 
     GameManager() {
         mCurrentScore = 0;
@@ -20,5 +25,10 @@ public class GameManager {
         return this.mCurrentScore;
     }
 
+
+    public void incrementScore() {
+        GameManager.getInstance().mCurrentScore += 5;
+        score.setText("Score: " + GameManager.getInstance().mCurrentScore);
+    }
 
 }
