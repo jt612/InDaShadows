@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.jobprogrammers.indashadows.IDShadows;
 import com.jobprogrammers.indashadows.R;
 
 

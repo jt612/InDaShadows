@@ -1,6 +1,7 @@
+package com.jobprogrammers;
+
 import android.app.Activity;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
@@ -8,30 +9,24 @@ import android.view.WindowManager;
 
 import com.jobprogrammers.indashadows.R;
 
+
 /**
- * Created by jt612 on 10/15/14.
+ * Created by jt612 on 12/22/14.
  */
-public class SplashScreen extends Activity {
+public class AndEngineSplashScreen extends Activity {
 
     // Splash screen timer
     private static int SPLASH_TIME_OUT;
-    MediaPlayer mp;
     Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         SPLASH_TIME_OUT = 4000;
+        super.onCreate(savedInstanceState);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.splash);
-        mp = MediaPlayer.create(this, R.raw.gong);
-        mp.setVolume(.5f, .5f);
-        mp.setLooping(false);
-        mp.setScreenOnWhilePlaying(true);
-        mp.start();
-
+        setContentView(R.layout.andenginesplashscreen);
 
         handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -45,20 +40,19 @@ public class SplashScreen extends Activity {
             public void run() {
                 // This method will be executed once the timer is over
                 // Start your app main activity
-                Intent i = new Intent(SplashScreen.this, AndEngineSplashScreen.class);
-                startActivity(i);
+                Intent i = new Intent(AndEngineSplashScreen.this, IDShadows.class);
 
                 // close this activity
+                startActivity(i);
                 finish();
-                if (isFinishing()) {
-                    mp.stop();
-                    mp.release();
-                }
+
+
             }
         }, SPLASH_TIME_OUT);
-
-
     }
 
 
 }
+
+
+

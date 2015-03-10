@@ -1,3 +1,5 @@
+package com.jobprogrammers;
+
 import android.util.DisplayMetrics;
 import android.view.Display;
 

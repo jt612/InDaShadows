@@ -1,3 +1,5 @@
+package com.jobprogrammers;
+
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 /**

@@ -1,3 +1,5 @@
+package com.jobprogrammers;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;

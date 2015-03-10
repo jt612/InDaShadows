@@ -1,3 +1,5 @@
+package com.jobprogrammers;
+
 import org.andengine.entity.IEntity;
 import org.andengine.entity.scene.background.SpriteBackground;
 import org.andengine.entity.sprite.Sprite;
