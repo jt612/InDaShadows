@@ -1,3 +1,6 @@
+import com.jobprogrammers.indashadows.ResourceManager;
+import com.jobprogrammers.indashadows.hero;
+
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
 /**

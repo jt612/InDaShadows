@@ -8,7 +8,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
-import com.jobprogrammers.indashadows.R;
+import com.jobprogrammers.indashadows.*;
+import com.jobprogrammers.indashadows.SplashScreen2startGame;
 
 
 /**

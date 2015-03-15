@@ -1,15 +1,12 @@
-import org.andengine.engine.camera.hud.HUD;
-import org.andengine.entity.text.Text;
+import com.jobprogrammers.indashadows.hero;
 
 /**
  * Created by jt612 on 1/30/15.
  */
 public class GameManager {
 
-
-    private static GameManager INSTANCE;
-    Text score;
-    HUD mHUD;
+    public hero player;
+    private static GameManager INSTANCE = new GameManager();
     private int mCurrentScore;
 
     GameManager() {
@@ -22,12 +19,17 @@ public class GameManager {
     }
 
     public int getCurrentScore() {
-        return this.mCurrentScore;
+        return mCurrentScore;
     }
 
-    public void incrementScore() {
-        this.getInstance().mCurrentScore += 10;
-        //score.setText("Score: " + this.getInstance().mCurrentScore);
+    public void incrementScore(){
+        mCurrentScore+=1;
     }
+
+
+    public void decrementScore() {
+        mCurrentScore -=1;
+    }
+
 
 }

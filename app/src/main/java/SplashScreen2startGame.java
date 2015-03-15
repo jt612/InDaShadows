@@ -11,6 +11,7 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 
 import com.jobprogrammers.indashadows.R;
+import com.jobprogrammers.indashadows.startGame;
 
 public class SplashScreen2startGame extends Activity {
     ProgressBar pg;

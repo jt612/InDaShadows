@@ -1,10 +1,17 @@
-import android.util.DisplayMetrics;
+import android.graphics.Point;
+import android.os.Build;
 import android.view.Display;
+import android.view.WindowManager;
+
+import com.jobprogrammers.indashadows.AbstractScene;
+import com.jobprogrammers.indashadows.ButtonLeft;
+import com.jobprogrammers.indashadows.ButtonRight;
+import com.jobprogrammers.indashadows.GameManager;
+import com.jobprogrammers.indashadows.GameScene;
+import com.jobprogrammers.indashadows.ResourceManager;
 
 import org.andengine.engine.camera.Camera;
 import org.andengine.engine.camera.hud.HUD;
-import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
-import org.andengine.engine.camera.hud.controls.BaseOnScreenControl;
 import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.engine.options.EngineOptions;
 import org.andengine.engine.options.ScreenOrientation;
@@ -16,6 +23,7 @@ import org.andengine.entity.text.TextOptions;
 import org.andengine.ui.activity.BaseGameActivity;
 import org.andengine.util.adt.align.HorizontalAlign;
 
+
 import java.io.IOException;
 
 /**
@@ -25,25 +33,37 @@ public class startGame extends BaseGameActivity {
 
     public static int CAMERA_WIDTH;
     public static int CAMERA_HEIGHT;
-    public int countdown = 500;//3000 the 500 is just a test value
+    public int countdown = 1000;//3000 the 1000 is just a test value
+    //the countdown is divided by 100 so that it runs as if the time limit is 10 seconds
     String TAG = "startGame";
     HUD mHUD;
-    Camera camera;
+    public static Camera camera;
     AbstractScene scene;
     //Text Variables for score and timer
     private Text score;
     private Text timer;
+    public ButtonLeft leftButton;
+    public ButtonRight rightButton;
+
 
     @Override
     public EngineOptions onCreateEngineOptions() {
-        final Display display = getWindowManager().getDefaultDisplay();
-        DisplayMetrics displayMetrics;
 
-        CAMERA_WIDTH = display.getWidth();
-        //displayMetrics.heightPixels;
-        //displayMetrics.widthPixels = display.getMetrics();
+        CAMERA_WIDTH = 0;
+        CAMERA_HEIGHT = 0;
+        Point size = new Point();
+        WindowManager w = getWindowManager();
+     //   player =
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+            w.getDefaultDisplay().getSize(size);
+            CAMERA_WIDTH = size.x;
+            CAMERA_HEIGHT = size.y;
+        }else{
+            Display d = w.getDefaultDisplay();
+            CAMERA_WIDTH = d.getWidth();
+            CAMERA_HEIGHT = d.getHeight();
+        }
 
-        CAMERA_HEIGHT = display.getHeight();
         camera = new Camera(0, 0, CAMERA_WIDTH, CAMERA_HEIGHT);
         EngineOptions engineOptions = new EngineOptions(true, ScreenOrientation.LANDSCAPE_SENSOR, new FillResolutionPolicy(), camera);
         engineOptions.getAudioOptions().setNeedsMusic(true).setNeedsSound(true);
@@ -60,8 +80,8 @@ public class startGame extends BaseGameActivity {
 
         ResourceManager.getInstance().loadGameAudio();
         this.createHUD();
-        this.createController();
-        ResourceManager.getInstance().mControl.refreshControlKnobPosition();
+
+
 
         pOnCreateResourcesCallback.onCreateResourcesFinished();
     }
@@ -75,8 +95,9 @@ public class startGame extends BaseGameActivity {
         ResourceManager.getInstance().music.play();
 
 
-        ResourceManager.getInstance().mControl.refreshControlKnobPosition();
-        scene.setChildScene(ResourceManager.getInstance().mControl);
+
+
+
         pOnCreateSceneCallback.onCreateSceneFinished(scene);
     }
 
@@ -97,23 +118,23 @@ public class startGame extends BaseGameActivity {
 
                     mHUD.unregisterUpdateHandler(this);
                     Text Gover = new Text(CAMERA_WIDTH / 2, CAMERA_HEIGHT / 2, ResourceManager.getInstance().GameOverFont, "GAME OVER!", new TextOptions(HorizontalAlign.CENTER), ResourceManager.getInstance().vbom);
-                    // score = new Text(10, 115, ResourceManager.getInstance().font, "Score: 0", new TextOptions(HorizontalAlign.LEFT), ResourceManager.getInstance().vbom);
-                    // Gover.setAnchorCenter(0, 0);
+
                     Gover.setText("GAME OVER!");
                     Gover.setVisible(true);
                     ResourceManager.getInstance().music.stop();
                     ResourceManager.getInstance().music.release();
                     ResourceManager.getInstance().gameOver.play();
                     mHUD.attachChild(Gover);
+                    scene.reset();
+                    this.reset();
 
                 } else {
 
                     timer.setText("Time: " + countdown / 100);
 
-                    score.setText("Score: 0000");
-                    //score.setText("Score: "+ GameManager.getInstance().getCurrentScore());
-                    //GameManager.getInstance().incrementScore();
-                    //whenever I try to increment the score it breaks
+                    score.setText("Score: " + GameManager.getInstance().getCurrentScore());
+
+
                 }
             }
 
@@ -127,43 +148,33 @@ public class startGame extends BaseGameActivity {
     }
 
 
-    public void createController() {
 
-        //values for size of the images
-        final float controllerX = ResourceManager.getInstance().controlBaseTextureRegion.getWidth();
-        final float controllerY = ResourceManager.getInstance().controlBaseTextureRegion.getHeight();
-
-        ResourceManager.getInstance().mControl = new AnalogOnScreenControl(controllerX, controllerY, camera, ResourceManager.getInstance().controlBaseTextureRegion, ResourceManager.getInstance().controlKnobTextureRegion, 0.1f, ResourceManager.getInstance().engine.getVertexBufferObjectManager(), new AnalogOnScreenControl.IAnalogOnScreenControlListener() {
-            @Override
-            public void onControlClick(AnalogOnScreenControl pAnalogOnScreenControl) {
-                //for now do nothing
-                //this is when they click on the control
-            }
-
-            @Override
-            public void onControlChange(BaseOnScreenControl pBaseOnScreenControl, float pValueX, float pValueY) {
-                camera.setCenter(camera.getCenterX() + (pValueX * 10), camera.getCenterY() + (pValueY * 10));
-                //   GameManager.getInstance().incrementScore();
-                //Not sure why this causes the app to crash
-                //probably needs an update handler or something
-
-            }
-        });
-        ResourceManager.getInstance().mControl.setAnchorCenter(0, 0);
-        ResourceManager.getInstance().mControl.setPosition(-1, 0);
-    }
 
     public void createHUD() {
         mHUD = new HUD();
+        leftButton = new ButtonLeft(CAMERA_WIDTH/2-200, CAMERA_HEIGHT -  20, ResourceManager.getInstance().rightB, getVertexBufferObjectManager());
+        rightButton = new ButtonRight(CAMERA_WIDTH/2+200, CAMERA_HEIGHT - 20, ResourceManager.getInstance().leftB, getVertexBufferObjectManager());
         ResourceManager.getInstance().camera.setHUD(mHUD);
-        timer = new Text(150, 115, ResourceManager.getInstance().font, "Time: 30", new TextOptions(HorizontalAlign.RIGHT), ResourceManager.getInstance().vbom);
-        score = new Text(10, 115, ResourceManager.getInstance().font, "Score: 0000", new TextOptions(HorizontalAlign.LEFT), ResourceManager.getInstance().vbom);
-        score.setAnchorCenter(0, -4);
-        timer.setAnchorCenter(-1, -4);
-        //ResourceManager.getInstance().mControl.setPosition();
-        mHUD.attachChild(score);
+        timer = new Text(CAMERA_WIDTH/2 + 100, CAMERA_HEIGHT - 15, ResourceManager.getInstance().font, "Time: 30", new TextOptions(HorizontalAlign.RIGHT), ResourceManager.getInstance().vbom);
+        score = new Text(CAMERA_WIDTH/2 -70, CAMERA_HEIGHT -15, ResourceManager.getInstance().font, "Score: 0000", new TextOptions(HorizontalAlign.LEFT), ResourceManager.getInstance().vbom);
+        //score.setAnchorCenter(0, -4);
+        //timer.setAnchorCenter(-2, -4);
 
+
+
+
+        //Registers the buttons as touchable
+        mHUD.registerTouchArea(leftButton);
+        mHUD.registerTouchArea(rightButton);
+
+
+        //this attaches stuff to the HUD
+        mHUD.attachChild(this.leftButton);
+        mHUD.attachChild(this.rightButton);
+        mHUD.attachChild(score);
         mHUD.attachChild(timer);
+
+
         ResourceManager.getInstance().camera.setHUD(mHUD);
     }
 }

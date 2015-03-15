@@ -1,15 +1,15 @@
 import android.graphics.Typeface;
 
+import com.jobprogrammers.indashadows.startGame;
+
 import org.andengine.audio.music.Music;
 import org.andengine.audio.music.MusicFactory;
 import org.andengine.audio.sound.Sound;
 import org.andengine.audio.sound.SoundFactory;
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
-import org.andengine.engine.camera.hud.controls.AnalogOnScreenControl;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.font.FontFactory;
-import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.PixelFormat;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
@@ -41,10 +41,10 @@ public class ResourceManager {
     public ITiledTextureRegion enemyTextureRegion;
     public ITextureRegion obstacleTextureRegion;
     public ITextureRegion backGroundTextureRegion;
-    // public ITexture mObstacleTextureRegion;
-    public ITexture mBackgroundTextureRegion;
-    public ITextureRegion controlBaseTextureRegion;
-    public ITextureRegion controlKnobTextureRegion;
+    public ITextureRegion rightB;
+    public ITextureRegion leftB;
+
+
     //sound related variables
     public Sound soundNotMakeJump;
     public Sound soundJump;
@@ -55,10 +55,9 @@ public class ResourceManager {
     public Font font;
     public Font GameOverFont;
     String TAG = "startGame/resourceManager";
-    AnalogOnScreenControl mControl;
+
     private BuildableBitmapTextureAtlas gameTextureAtlas;
-    ;
-    private BuildableBitmapTextureAtlas otherTextureAtlas;
+
 
 
     private ResourceManager() {
@@ -90,14 +89,14 @@ public class ResourceManager {
         obstacleTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity.getAssets(), "box.png");
 
         backGroundTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity.getAssets(), "background.jpg");
-        //base of a new controller
-        controlBaseTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity.getAssets(), "base.png");
-        //joystick image for controller
-        controlKnobTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity.getAssets(), "knob.png");
+
+
+        rightB = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity.getAssets(), "left.png");
+        leftB = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTextureAtlas, activity.getAssets(), "right.png");
 
 
         try {
-            gameTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(4, 0, 4));
+            gameTextureAtlas.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(5, 0, 5));
             gameTextureAtlas.load();
         } catch (final ITextureAtlasBuilder.TextureAtlasBuilderException e) {
             throw new RuntimeException("Error while loading game textures " +

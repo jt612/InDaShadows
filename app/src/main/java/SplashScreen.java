@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.jobprogrammers.indashadows.AndEngineSplashScreen;
 import com.jobprogrammers.indashadows.R;
 
 /**
